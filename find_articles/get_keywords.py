@@ -114,11 +114,8 @@ if __name__ == '__main__':
 
     vectorizer = unpkl(pkl_vectorizer_file)
     nmf = unpkl(pkl_nmf_file)
-
     key_words = find_keywords(new_document,vectorizer,nmf)
-
-    #bing_api_key = os.environ['BING_API_KEY']
-    bing_api_key = 'c705afe8bd8645aebb686f7a925ebb20'
+    bing_api_key = os.environ['BING_API_KEY']
     similar_stories = search_docs(bing_api_key, key_words)
     for x,y,z in similar_stories:
         print x,y , '\n'
