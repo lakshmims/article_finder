@@ -11,11 +11,8 @@ import pickle
 
 def model_nmf(content_list,max_df, min_df, max_features, n_topics):
     #vectorizer = TfidfVectorizer(max_df=max_df, min_df=min_df, max_features=max_features, binary=False, ngram_range=(1, 2))
-    #vectorizer = TfidfVectorizer(max_df=0.9, min_df=12, max_features=1000, stop_words='english', binary=False, ngram_range=(1, 2))
-    vectorizer = TfidfVectorizer(max_df=0.95, min_df=1, max_features=1000, stop_words='english', binary=False, ngram_range=(1, 1))
     tfidf = vectorizer.fit_transform(content_list)
-    #nmf = NMF(n_components=10, alpha=.1, l1_ratio=.5)
-    nmf = NMF(n_components=10, random_state=1, alpha=.1, l1_ratio=.5)
+    nmf = NMF(n_components=n_topics, random_state=1, alpha=.1, l1_ratio=.5)
     transformed_docs = nmf.fit_transform(tfidf)
     feature_names = vectorizer.get_feature_names()
     n_top_words = 10
