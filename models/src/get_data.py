@@ -32,26 +32,21 @@ def load_data(folder, sub_dirs):
         return df
 
 def process_text(content_list):
-    
+
     content_list_new = []
     wl = WordNetLemmatizer()
     stop_words = stopwords.words('english')
     regex = re.compile('[^a-zA-Z]')
+    pos_to_drop = {'CC','IN','UH','WP','DT','WDT','PRP','VBD','PRP$','RB', 'VB','VBP'}
 
     for content in content_list:
         word_list_1 = content.split()
         word_list_2 = [word for word in word_list_1 if word not in stop_words]
-        pos_to_drop = ['CC','IN','UH','WP','DT','WDT','PRP','VBD','PRP$','RB', 'VB','VBP']
         tagged_content = pos_tag(word_list_2)
-
-        word_list_3 = []
-        for word,pos in tagged_content:
-            if pos not in pos_to_drop:
-                word_list_3.append(word)
-
+        word_list_3 = [word for word,pos in tagged_content if pos not in pos_to_drop]
         word_list_4 = [regex.sub(" ",wl.lemmatize(word)) for word in word_list_3 ]
 
-        content_list_new.append(" ".join(word_list_4))
+        content_list_new.append(' '.join(word_list_4))
     return content_list_new
 
 def pkl(content,file_name):
